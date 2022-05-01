@@ -2,7 +2,6 @@
     defaultBranch = main
 [user]
     name = Florent SANIKA
-    email = florent.sanika@budget-insight.com
     
 [alias]
     co = checkout
