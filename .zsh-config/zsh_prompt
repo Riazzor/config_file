@@ -1,0 +1,67 @@
+
+precmd(){ 
+	# To calculate the reel length of git_branch and PROMPT, we use zero to substitute the escape character
+	zero='%([BSUbfksu]|([FK]|){*})'
+	ZLE_RPROMPT_INDENT=0
+	vcs_info 
+	if [[ -n ${vcs_info_msg_0_} ]]; then
+        # vcs_info found something
+        # STATUS line taken from https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/git.zsh
+		STATUS=$(command git status --porcelain 2> /dev/null | tail -n1)
+		git_branch='${vcs_info_msg_0_}'
+		if [[ -n $STATUS ]]; then
+			git_branch="%{$fg[red]%}$git_branch%{$reset_color%}"
+			PROMPT='%{$fg[blue]%}%B%n%b@%{$fg[yellow]%}%m:%f'
+		else
+			git_branch="%{$fg[green]%}$git_branch%{$reset_color%}" 
+			PROMPT='%{$fg[blue]%}%B%n%b@%{$fg[yellow]%}%m:%f'
+		fi
+	else
+        # nothing from vcs_info
+		PROMPT='%{$fg[blue]%}%B%n%b@%{$fg[yellow]%}%m:%f'
+		# PROMPT="%{$fg[blue]%}%B%n%b@%m %{$reset_color%} %{$fg[green]%}%~ "%{$reset_color%}$'\n'"%{$fg[red]%}%B${vcs_info_msg_0_}%b$ "
+	fi	
+	if [[ `basename "$VIRTUAL_ENV"` != "" ]]; then
+		PROMPT="%{$bg[green]%}%{$fg[black]%}(`basename $VIRTUAL_ENV`)%{$reset_color%}$PROMPT"
+	fi
+	PROMPT="╭$PROMPT"
+    END_PROMPT1="%{$fg[blue]%}%~%f"
+    END_PROMPT2="%{$fg[blue]%}`basename $(pwd)`%f"
+    END_PROMPT3="%{$fg[blue]%}%~%f"
+	prt_width=${#${(S%%)PROMPT//$~zero/}} 
+    end_prompt_width1=${#${(S%%)END_PROMPT1//$~zero/}}
+    end_prompt_width2=${#${(S%%)END_PROMPT2//$~zero/}}
+    end_prompt_width3=${#${(S%%)END_PROMPT3//$~zero/}}
+	gbr_width="${#${(S%%)git_branch//$~zero/}}"
+	middle_width=$(($COLUMNS-$prt_width-$gbr_width))
+	rigth_width=$(($COLUMNS-$prt_width))                # calculating without end_prompt
+    if (( $gbr_width != 0 ))
+    then
+        if (( $rigth_width >= ( $end_prompt_width1 + $gbr_width + 5 ) ))
+        then
+            PROMPT="$PROMPT$END_PROMPT1─$git_branch──➤"
+        elif (( $rigth_width >= ( $end_prompt_width2 + $gbr_width + 5 ) ))
+        then
+            PROMPT="$PROMPT$END_PROMPT2─$git_branch──➤"
+        elif (( $COLUMNS > ( $prt_width + $end_prompt_width1 ) ))
+        then
+            PROMPT="$PROMPT$END_PROMPT1"$'\n'"╞$git_branch"
+        else
+            PROMPT="$PROMPT"$'\n'"╞$END_PROMPT1"$'\n'"╞$git_branch"
+        fi
+    else
+        if (( $rigth_width > ( $end_prompt_width1 + 5 ) ))
+        then
+            PROMPT="$PROMPT$END_PROMPT1──➤"
+        elif (( $rigth_width > ( $end_prompt_width2 + 5 ) ))
+        then
+            PROMPT="$PROMPT$END_PROMPT2──➤"
+        elif (( $COLUMNS > $end_prompt_width1 ))
+        then
+            PROMPT="$PROMPT"$'\n'"╞$END_PROMPT1"
+        fi
+    fi
+	PROMPT+=$'\n''╰─➤$ %{$reset_color%}'
+# ┣╞
+
+}

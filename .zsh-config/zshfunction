@@ -1,0 +1,38 @@
+Z_DIR_CONFIG="/home/florent/.zsh-config"
+
+function zsh_add_file() {
+    [ -f "$Z_DIR_CONFIG/$1" ] && source "$Z_DIR_CONFIG/$1"
+}
+
+# Work only with Oh_my_zsh
+function zsh_add_plugin() {
+    PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
+    if [ -d "$Z_DIR_CONFIG/plugin/$PLUGIN_NAME" ]; then
+        zsh_add_file "plugin/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh" || \
+        zsh_add_file "plugin/$PLUGIN_NAME/$PLUGIN_NAME.zsh"
+    else
+        git clone "https://github.com/$1.git" "$Z_DIR_CONFIG/plugin/$PLUGIN_NAME"
+    fi
+}
+
+function get_current_branch() {
+    gbr_name=$(git rev-parse --abbrev-ref HEAD)
+    if [[ "$gbr_name" == ^fatal:* ]]; then
+        echo ""
+    else
+        echo "$gbr_name"
+    fi
+}
+
+
+function activate-here(){
+    source ~/.local/share/virtualenvs/$(basename $(pwd))/bin/activate
+    
+}
+
+#shortcut to create a virtual environment if no argument is necessary
+function venv-here(){
+    python3 -m virtualenv ~/.local/share/virtualenvs/$(basename $(pwd))
+    # source ~/.local/share/virtualenvs/$(basename $(pwd))/bin/activate
+}
+
