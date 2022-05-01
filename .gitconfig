@@ -2,6 +2,7 @@
     defaultBranch = main
 [user]
     name = Florent SANIKA
+    email = flo.sanika@gmail.com
     
 [alias]
     co = checkout
