@@ -47,3 +47,30 @@ function zle-line-finish () {
 zle -N zle-line-init
 zle -N zle-line-finish  
 
+bindkey "$terminfo[kLFT5]" backward-word
+bindkey "$terminfo[kRIT5]" forward-word
+
+# Same with Alt but without special character
+custom-backward-word() {
+    local WORDCHARS="*?[]~=&;!#$%^(){}<>";
+    zle backward-word;
+}
+custom-forward-word() {
+    local WORDCHARS="*?[]~=&;!#$%^(){}<>";
+    zle forward-word;
+}
+# Not working search why :
+custom-backward-kill-word() {
+    local WORDCHARS="*?[]~=&;!#$%^(){}<>";
+    zle backward-kill-word;
+}
+
+zle -N custom-backward-kill-word
+zle -N custom-backward-word
+zle -N custom-forward-word
+
+bindkey "$terminfo[kLFT3]" custom-backward-word
+bindkey "$terminfo[kRIT3]" custom-forward-word
+
+bindkey '^[^?' custom-backward-kill-word
+

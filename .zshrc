@@ -7,6 +7,8 @@ source $Z_DIR_CONFIG/zshfunction
 # personal alias
 zsh_add_file zsh_aliases
 
+zsh_add_file zsh_kbd
+
 zsh_add_file zshcompletions
 # zsh_add_file zsh_export
 zsh_add_file zsh_prompt
