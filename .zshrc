@@ -1,4 +1,4 @@
-Z_DIR_CONFIG="/home/florent/.zsh-config"
+Z_DIR_CONFIG="$HOME/.zsh-config"
 
 if [ -f ~/.work_config ]; then
     . ~/.work_config

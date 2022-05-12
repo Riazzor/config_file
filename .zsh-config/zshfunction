@@ -1,4 +1,4 @@
-Z_DIR_CONFIG="/home/florent/.zsh-config"
+Z_DIR_CONFIG="$HOME/.zsh-config"
 
 function zsh_add_file() {
     [ -f "$Z_DIR_CONFIG/$1" ] && source "$Z_DIR_CONFIG/$1"
