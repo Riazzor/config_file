@@ -42,3 +42,4 @@ bindkey "^H" backward-kill-word
 
 # save and reload history after each command
 export PROMPT_COMMAND="history -a; history -c, history -r; $PROMPT_COMMAND"
+export LANG=en_US.UTF-8
