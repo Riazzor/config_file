@@ -28,3 +28,6 @@
     added = yellow
     changed = green
     untracked = cyan
+[core]
+	editor = nvim
+	excludesfile = TODO.md

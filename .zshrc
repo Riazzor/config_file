@@ -45,3 +45,16 @@ bindkey "^H" backward-kill-word
 # save and reload history after each command
 export PROMPT_COMMAND="history -a; history -c, history -r; $PROMPT_COMMAND"
 export LANG=en_US.UTF-8
+export PATH=/usr/local/git/bin:/home/florent/.cargo/bin:/home/florent/.local/bin:/home/florent/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/florent/.local/share/virtualenvs/backend/bin:/home/florent/dev/backend/scripts:/home/florent/Software:/usr/local/git/bin
+
+alias neovim="gnome-terminal --window --maximize -- nvim "
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init --path)" # This only sets up the path stuff.
+eval "$(pyenv init -)" # This makes pyenv work in the shell.
+eval "$(pyenv virtualenv-init -)" # Enabling virtualenv so it works natively.

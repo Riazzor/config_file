@@ -49,5 +49,5 @@ alias ggA="_gg -A "
 alias ggB="_gg -B "
 alias ggC="_gg -C "
 
-alias config="/usr/bin/git --git-dir=$HOME/config_file --work-tree=$HOME "
-
+alias config="git --git-dir=$HOME/config_file --work-tree=$HOME "
+alias vim=nvim
