@@ -14,7 +14,7 @@ local function lsp_keymap(bufnr)
     map("n", "gd", vim.lsp.buf.definition, bufopts)
     -- map("n", "gD", vim.lsp.buf.references, bufopts)
     map("n", "K", vim.lsp.buf.hover, bufopts)
-    --    map("n", "gi", vim.lsp.buf.implementation, bufopts)
+    -- map("n", "gi", vim.lsp.buf.implementation, bufopts)
     map("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
     map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
     map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
@@ -24,13 +24,13 @@ local function lsp_keymap(bufnr)
     -- map("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
     map("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
     map("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-    map("v", "<leader>ca", vim.lsp.buf.range_code_action, bufopts)
+    map("v", "<leader>ca", vim.lsp.buf.code_action, bufopts)
     -- map("n", "<leader>f", vim.lsp.buf.formatting, bufopts)
 end
 
 local function lsp_highlight_document(client)
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.document_highlight then
     vim.api.nvim_command([[autocmd CursorHold,CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
     vim.api.nvim_command([[autocmd CursorMoved,CursorMovedI <buffer> lua vim.lsp.buf.clear_references()]])
   end
@@ -45,22 +45,6 @@ local on_attach = function(client, bufnr)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     lsp_keymap(bufnr)
     lsp_highlight_document(client)
-    -- if client.resolved_capabilities.document_highlight then
-    --     vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-    --     vim.api.nvim_clear_autocmds { buffer = bufnr, group = "lsp_document_highlight" }
-    --     vim.api.nvim_create_autocmd("CursorHold", {
-    --         callback = vim.lsp.buf.document_highlight,
-    --         buffer = bufnr,
-    --         group = "lsp_document_highlight",
-    --         desc = "Document Highlight",
-    --     })
-    --     vim.api.nvim_create_autocmd("CursorMoved", {
-    --         callback = vim.lsp.buf.clear_references,
-    --         buffer = bufnr,
-    --         group = "lsp_document_highlight",
-    --         desc = "Clear All the References",
-    --     })
-    -- end
 end
 
 local lsp_flags = {
@@ -69,44 +53,44 @@ local lsp_flags = {
 }
 
 -- luasnip and cmp setup
-local luasnip_status_ok, luasnip = pcall(require, "luasnip")
-if not luasnip_status_ok then
-    vim.notify("Something went wrong with Luasnip")
-    return
-end
-local cmp_status_ok, cmp = pcall(require, "cmp")
-if not cmp_status_ok then
-    vim.notify("Something went wrong with nvim-cmp")
-    return
-end
+-- local luasnip_status_ok, luasnip = pcall(require, "luasnip")
+-- if not luasnip_status_ok then
+--     vim.notify("Something went wrong with Luasnip")
+--     return
+-- end
+-- local cmp_status_ok, cmp = pcall(require, "cmp")
+-- if not cmp_status_ok then
+--     vim.notify("Something went wrong with nvim-cmp")
+--     return
+-- end
 
-local kind_icons = {
-    Text = "",
-    Method = "m",
-    Function = "",
-    Constructor = "",
-    Field = "",
-    Variable = "",
-    Class = "",
-    Interface = "",
-    Module = "",
-    Property = "",
-    Unit = "",
-    Value = "",
-    Enum = "",
-    Keyword = "",
-    Snippet = "",
-    Color = "",
-    File = "",
-    Reference = "",
-    Folder = "",
-    EnumMember = "",
-    Constant = "",
-    Struct = "",
-    Event = "",
-    Operator = "",
-    TypeParameter = "",
-}
+-- local kind_icons = {
+--     Text = "",
+--     Method = "m",
+--     Function = "",
+--     Constructor = "",
+--     Field = "",
+--     Variable = "",
+--     Class = "",
+--     Interface = "",
+--     Module = "",
+--     Property = "",
+--     Unit = "",
+--     Value = "",
+--     Enum = "",
+--     Keyword = "",
+--     Snippet = "",
+--     Color = "",
+--     File = "",
+--     Reference = "",
+--     Folder = "",
+--     EnumMember = "",
+--     Constant = "",
+--     Struct = "",
+--     Event = "",
+--     Operator = "",
+--     TypeParameter = "",
+-- }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -114,73 +98,73 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 --     dynamicRegistration = false,
 --     lineFoldingOnly = true
 -- }
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
--- nvim-cmp setup
-cmp.setup {
-    completion = {
-        autocomplete = false
-    },
-    snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end,
-    },
-    mapping = cmp.mapping.preset.insert({
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<CR>"] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-        },
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-    }),
-    formatting = {
-        fields = { "kind", "abbr", "menu" },
-        format = function(entry, vim_item)
-            -- Kind icons
-            vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
-            vim_item.menu = ({
-                nvim_lsp = "[LSP]",
-                buffer = "[Buffer]",
-                luasnip = "[LuaSnip]",
-                nvim_lua = "[Lua]",
-                latexsymbols = "[LaTex]",
-                path = "[Path]",
-            })[entry.source.name]
-            return vim_item
-        end
-    },
-    sources = {
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-        { name = "nvim_lua" },
-        { name = "buffer" },
-        { name = "path" },
-        { name = "cmdline" },
-    },
-    window = {
-        documentation = cmp.config.window.bordered(),
-    },
-}
+-- -- nvim-cmp setup
+-- cmp.setup {
+--     completion = {
+--         autocomplete = true
+--     },
+--     snippet = {
+--         expand = function(args)
+--             luasnip.lsp_expand(args.body)
+--         end,
+--     },
+--     mapping = cmp.mapping.preset.insert({
+--         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+--         ["<C-Space>"] = cmp.mapping.complete(),
+--         ["<C-f>"] = cmp.mapping.scroll_docs(4),
+--         ["<CR>"] = cmp.mapping.confirm {
+--             behavior = cmp.ConfirmBehavior.Replace,
+--             select = true,
+--         },
+--         ["<Tab>"] = cmp.mapping(function(fallback)
+--             if cmp.visible() then
+--                 cmp.select_next_item()
+--             elseif luasnip.expand_or_jumpable() then
+--                 luasnip.expand_or_jump()
+--             else
+--                 fallback()
+--             end
+--         end, { "i", "s" }),
+--         ["<S-Tab>"] = cmp.mapping(function(fallback)
+--             if cmp.visible() then
+--                 cmp.select_prev_item()
+--             elseif luasnip.jumpable(-1) then
+--                 luasnip.jump(-1)
+--             else
+--                 fallback()
+--             end
+--         end, { "i", "s" }),
+--     }),
+--     formatting = {
+--         fields = { "kind", "abbr", "menu" },
+--         format = function(entry, vim_item)
+--             -- Kind icons
+--             vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
+--             vim_item.menu = ({
+--                 nvim_lsp = "[LSP]",
+--                 buffer = "[Buffer]",
+--                 luasnip = "[LuaSnip]",
+--                 nvim_lua = "[Lua]",
+--                 latexsymbols = "[LaTex]",
+--                 path = "[Path]",
+--             })[entry.source.name]
+--             return vim_item
+--         end
+--     },
+--     sources = {
+--         { name = "nvim_lsp" },
+--         { name = "luasnip" },
+--         { name = "nvim_lua" },
+--         { name = "buffer" },
+--         { name = "path" },
+--         { name = "cmdline" },
+--     },
+--     window = {
+--         documentation = cmp.config.window.bordered(),
+--     },
+-- }
 -- lsp_installer
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
@@ -208,6 +192,7 @@ lspconfig.pylsp.setup {
         },
     },
 }
+-- NO SUPPORT FOR PYENV VENV. (27/02/2023)
 -- lspconfig.pyright.setup {
 --     cmd = { "pyright-langserver", "--stdio" },
 --     on_attach = on_attach,
@@ -222,7 +207,7 @@ lspconfig.pylsp.setup {
 --     },
 -- }
 
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
@@ -260,7 +245,8 @@ lspconfig.html.setup{
 
 vim.api.nvim_create_user_command(
     'Format',
-    'lua vim.lsp.buf.formatting()',
+    'lua vim.lsp.buf.format { async = true }',
+    -- 'lua vim.lsp.buf.formatting()',
     {}
 )
 

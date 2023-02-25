@@ -11,9 +11,9 @@ require("nvim-tree").setup ({
     git = {
         ignore = false,
     },
-    open_on_setup = true,
+    -- open_on_setup = true,
     view = {
-        adaptive_size = true,
+        adaptive_size = false,
         width = 35,
         mappings = {
             list = {
@@ -123,4 +123,20 @@ vim.cmd [[
     noremap <silent> <leader>e :call SmartTree()<CR>
 ]]
 
+local function open_nvim_tree(data)
 
+  -- buffer is a directory
+  local directory = vim.fn.isdirectory(data.file) == 1
+
+  if not directory then
+    return
+  end
+
+  -- change to the directory
+  vim.cmd.cd(data.file)
+
+  -- open the tree
+  require("nvim-tree.api").tree.open()end
+
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })

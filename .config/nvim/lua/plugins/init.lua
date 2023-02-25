@@ -11,6 +11,7 @@ require 'plugins.indentblankline-config'
 require 'plugins.cursorholdfix'
 require 'plugins.whichkey-config'
 require 'plugins.emmet-vim'
+require 'plugins.nvim_cmp-config'
 -- require 'plugins.prettyfold-config'
 
 local status_ok, packer = pcall(require, 'packer')
@@ -80,7 +81,6 @@ packer.startup(function()
     use 'jiangmiao/auto-pairs'
 
     -- Telescope
-    use 'nvim-lua/plenary.nvim'
     -- use 'BurntSushi/ripgrep'
     use 'sharkdp/fd'
     use 'nvim-telescope/telescope.nvim'
