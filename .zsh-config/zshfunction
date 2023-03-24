@@ -1,5 +1,10 @@
 Z_DIR_CONFIG="$HOME/.zsh-config"
 
+md() {
+    local fileName=${1:-"README.md"}
+    pandoc "$fileName" | lynx -stdin
+}
+
 function zsh_add_file() {
     [ -f "$Z_DIR_CONFIG/$1" ] && source "$Z_DIR_CONFIG/$1"
 }
