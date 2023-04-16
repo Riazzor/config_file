@@ -49,8 +49,12 @@ if not status_ok then
 end
 
 bufferline.setup {
-    icon_separator_active = '',
-    icon_separator_inactive = '',
+    icons = {
+        separator = {left = '', right = ''},
+        inactive = {
+            separator = {left = '', right = ''}
+        }
+    },
     no_name_title = 'new file',
     exclude_ft = {'buffer'},
 }

@@ -4,6 +4,5 @@ require 'settings'
 require 'plugins'
 
 require 'colorscheme'
-
 -- Telescope
 require 'plugins.telescope-config'

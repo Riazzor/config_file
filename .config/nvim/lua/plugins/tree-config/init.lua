@@ -65,42 +65,13 @@ require("nvim-tree").setup ({
 })
 
 -- support for barbar plugin
-local nvim_tree_events = require('nvim-tree.events')
+--local nvim_tree_events = require('nvim-tree.events')
+local api = require('nvim-tree.api')
+local Event = api.events.Event
 local bufferline_api = require('bufferline.api')
 
-function GetTreeSize()
-    -- local vim_size = vim.o.columns
-    --local tree_size = vim.api.nvim_win_get_width(0)
-    ---- if tree_size == vim_size then
-    --    -- In case something goes wrong
-    ---- The maximum size of the window is :
-    ---- vim_size - 30(default size of nvimtree) - 1(window separator)
-    --if tree_size > 60 then                 -- Not perfect but works for now
-    --    tree_size = 30
-    --    --probably took the size of wrong window
-    --    -- tree_size = vim.api.nvim_win_get_width(1000)
-    --end
-    -- print(tree_size)
-    local tree_size = require'nvim-tree.view'.View.width
-    if tree_size > 50 then
-        tree_size = 50
-    end
-    return tree_size
-end
-nvim_tree_events.on_tree_open(function ()
-    bufferline_api.set_offset(
-        GetTreeSize()
-    )
-end)
-
-nvim_tree_events.on_tree_resize(function ()
-    bufferline_api.set_offset(
-        GetTreeSize()
-    )
-end)
-
-nvim_tree_events.on_tree_close(function ()
-    bufferline_api.set_offset(0)
+api.events.subscribe(Event.TreeOpen, function ()
+    bufferline_api.set_offset(36)
 end)
 
 function SignColumn()

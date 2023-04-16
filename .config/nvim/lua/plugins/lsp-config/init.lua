@@ -169,15 +169,25 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status_ok then
-    print("Something went wrong with lspconfig")
+    vim.notify("Something went wrong with lspconfig")
     return
 end
-local lsp_installer_status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
-if not lsp_installer_status_ok then
-    vim.notify("Something went wrong with nvim-lsp-installer")
+local lsp_mason_status_ok, lsp_mason = pcall(require, "mason")
+if not lsp_mason_status_ok then
+    vim.notify("Something went wrong with mason")
     return
 end
-lsp_installer.setup {}
+local lsp_mason_bridge_status_ok, lsp_mason_bridge = pcall(require, "mason-lspconfig")
+if not lsp_mason_bridge_status_ok then
+    vim.notify("Something went wrong with mason")
+    return
+end
+lsp_mason.setup {}
+lsp_mason_bridge.setup {}
+
+-- =================
+-- PYTHON
+-- =================
 
 lspconfig.pylsp.setup {
     cmd = { "pylsp" },
@@ -207,6 +217,10 @@ lspconfig.pylsp.setup {
 --     },
 -- }
 
+-- =================
+-- LUA
+-- =================
+
 lspconfig.lua_ls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
@@ -223,6 +237,10 @@ lspconfig.lua_ls.setup {
     },
 
 }
+
+-- =================
+-- HTML
+-- =================
 
 lspconfig.html.setup{
     cmd = { "vscode-html-language-server", "--stdio" },
@@ -241,6 +259,28 @@ lspconfig.html.setup{
     -- root_dir = function() return vim.loop.cwd() end,
     -- settings = {},
     single_dile_support = true,
+}
+
+-- =================
+-- JSON
+-- =================
+
+lspconfig.jsonls.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+
+}
+
+-- =================
+-- c language
+-- =================
+
+lspconfig.clangd.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+
 }
 
 vim.api.nvim_create_user_command(

@@ -59,7 +59,9 @@ packer.startup(function()
     -- LSP support
     use {
         'neovim/nvim-lspconfig',
-        "williamboman/nvim-lsp-installer",
+        'williamboman/mason.nvim',
+        'williamboman/mason-lspconfig.nvim',
+        run = ":MasonUpdate"
     }
     -- use 'anuvyklack/pretty-fold.nvim'
     -- CMP support
