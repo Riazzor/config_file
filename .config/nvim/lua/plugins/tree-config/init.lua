@@ -1,3 +1,7 @@
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true
+
 local function on_attach(bufnr)
     local api = require('nvim-tree.api')
 
@@ -136,16 +140,16 @@ require("nvim-tree").setup({
 
 -- support for barbar plugin
 --local nvim_tree_events = require('nvim-tree.events')
-local api = require('nvim-tree.api')
-local Event = api.events.Event
-local bufferline_api = require('bufferline.api')
+-- local api = require('nvim-tree.api')
+-- local Event = api.events.Event
+-- local bufferline_api = require('bufferline.api')
 
-api.events.subscribe(Event.Ready, function()
-    bufferline_api.set_offset(0)
-end)
-api.events.subscribe(Event.TreeOpen, function()
-    bufferline_api.set_offset(36)
-end)
+-- api.events.subscribe(Event.Ready, function()
+--     bufferline_api.set_offset(0)
+-- end)
+-- api.events.subscribe(Event.TreeOpen, function()
+--     bufferline_api.set_offset(36)
+-- end)
 
 function SignColumn()
     vim.cmd([[setlocal signcolumn=yes:1]])

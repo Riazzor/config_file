@@ -1,5 +1,6 @@
 vim.g.tokyonight_style = "night"
-local colorscheme = 'tokyonight'
+-- local colorscheme = 'tokyonight'
+local colorscheme = 'duskfox'
 
 -- local colorscheme = 'nightfly'
 -- local colorscheme = 'NeoSolarized'

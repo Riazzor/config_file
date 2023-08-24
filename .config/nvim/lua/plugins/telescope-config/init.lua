@@ -41,4 +41,5 @@ telescope.setup {
 keymap('n', '<A-f>', '<cmd>Telescope current_buffer_fuzzy_find<CR>', opts)
 keymap('n', '<leader><A-f>', '<cmd>Telescope live_grep<CR>', opts)
 keymap('n', 'gD', '<cmd>Telescope lsp_references<CR>', {})
+keymap('n', 'gb', '<cmd>Telescope buffers<CR>', {})
 -- builtin.

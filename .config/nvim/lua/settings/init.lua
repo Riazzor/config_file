@@ -68,7 +68,6 @@ vim.cmd([[
             PackerSync
         endfunction
     endif
-
     augroup packer_user_config
         autocmd!
         autocmd BufWritePost init.lua stopinsert | call PostWriteLuaConfig()

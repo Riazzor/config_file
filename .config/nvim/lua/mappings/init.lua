@@ -37,6 +37,7 @@ keymap('i', '<C-s>', '<Esc>:w<CR>a', {})
 keymap('i', '<A-j>', '<ESC>:move .+1<CR>==gi', opts)
 keymap('i', '<A-k>', '<ESC>:move .-2<CR>==gi', opts)
 keymap('i', 'kk', '<ESC>', opts)
+keymap('i', 'KK', '<ESC>', opts)
 
 -- Terminal mode :
 keymap('t', '<C-h>', '<C-\\><C-N><C-w>h', term_opts)
