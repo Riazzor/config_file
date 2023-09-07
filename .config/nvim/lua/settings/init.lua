@@ -53,26 +53,11 @@ vim.cmd[[let g:python3_host_prog = '/home/florent/.local/share/virtualenvs/nvim/
 -- vim.cmd[[set foldlevel=2]]
 -- vim.cmd[[set foldclose=all]]
 -- vim.cmd[[set foldopen=all]]
+
+-- Autocommands
 vim.cmd([[
     augroup python_file
         autocmd!
         autocmd focuslost,bufleave *.py,*.html,*.css,*.js write <afile> | stopinsert 
-    augroup end
-]])
--- Autocommands
--- this one is for compiling everytime the plugins file are modified(packer)
-vim.cmd([[
-    if !exists('*PostWriteLuaConfig')
-        function! PostWriteLuaConfig()
-            luafile <afile>
-            exec "stopinsert"
-            PackerSync
-        endfunction
-    endif
-    augroup packer_user_config
-        autocmd!
-        autocmd BufWritePost init.lua stopinsert | call PostWriteLuaConfig()
-        autocmd BufWritePost installed-plugins.lua call PostWriteLuaConfig()
-        autocmd BufLeave *.lua write <afile> 
     augroup end
 ]])
