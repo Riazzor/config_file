@@ -5,7 +5,7 @@ if not status_ok then
 end
 
 
-packer.init {
+packer.init { -- Unmaintened
     display = {
         open_fn = function()
             return require 'packer.util'.float { border = 'rounded' }
@@ -62,10 +62,10 @@ packer.startup(function()
         'nvim-lualine/lualine.nvim',
         commit = '45e27ca739c7be6c49e5496d14fcf45a303c3a63',
     }
-    -- use {
-    --     'romgrk/barbar.nvim',
-    --     commit = 'eecabfedc9429f6184feb3b6655bc45a4ed36a7e',
-    -- }
+    use {
+        'romgrk/barbar.nvim',
+        commit = 'dd852401ee902745b67fc09a83d113b3fe82a96f',
+    }
 
     -- Colorscheme
     use 'overcache/NeoSolarized'
@@ -143,7 +143,6 @@ packer.startup(function()
     }
 
     -- Telescope
-    -- use 'BurntSushi/ripgrep'
     use {
         'sharkdp/fd',
         commit = 'a248607beefac2137cbe068ef74898c46e0705dd',
@@ -185,18 +184,16 @@ packer.startup(function()
     }
 end)
 
--- require 'plugins.installed-plugins'
 require 'plugins.neural-config'
 require 'plugins.treesitter-config'
 require 'plugins.tree-config'
 require 'plugins.lsp-config'
 require 'plugins.notify-config'
 require 'plugins.lualine-config'
--- require 'plugins.barbar-config'
+require 'plugins.barbar-config'
 require 'plugins.gitsigns-config'
 require 'plugins.hop-config'
 require 'plugins.indentblankline-config'
--- require 'plugins.cursorholdfix'
 require 'plugins.whichkey-config'
 require 'plugins.emmet-vim'
 require 'plugins.nvim_cmp-config'

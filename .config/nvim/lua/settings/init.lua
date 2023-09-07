@@ -40,6 +40,7 @@ vim.wo.colorcolumn = '120'
 
 -- Command that I can't find lua equivalent.
 vim.api.nvim_command('set path+=**')
+vim.api.nvim_command('let g:netrw_use_noswf=0')
 
 -- Highlight group
 vim.cmd[[highlight ColorColumn ctermbg=7 ctermfg=0]]

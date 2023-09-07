@@ -283,6 +283,13 @@ lspconfig.clangd.setup{
 
 }
 
+
+lspconfig.spectral.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+}
+
 vim.api.nvim_create_user_command(
     'Format',
     'lua vim.lsp.buf.format { async = true }',

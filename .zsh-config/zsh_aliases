@@ -50,4 +50,5 @@ alias ggB="_gg -B "
 alias ggC="_gg -C "
 
 alias config="git --git-dir=$HOME/config_file --work-tree=$HOME "
-alias vim=nvim
+alias vim=$HOME/.config/nvim-linux64/bin/nvim
+# alias vim=nvim

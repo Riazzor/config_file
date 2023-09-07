@@ -139,25 +139,21 @@ require("nvim-tree").setup({
 })
 
 -- support for barbar plugin
---local nvim_tree_events = require('nvim-tree.events')
--- local api = require('nvim-tree.api')
--- local Event = api.events.Event
--- local bufferline_api = require('bufferline.api')
+-- the winbar will have the offset the size of the file editor
+ local api = require('nvim-tree.api')
+ local Event = api.events.Event
+ local bufferline_api = require('bufferline.api')
 
--- api.events.subscribe(Event.Ready, function()
---     bufferline_api.set_offset(0)
--- end)
--- api.events.subscribe(Event.TreeOpen, function()
---     bufferline_api.set_offset(36)
--- end)
+ api.events.subscribe(Event.Ready, function()
+     bufferline_api.set_offset(0)
+ end)
+ api.events.subscribe(Event.TreeOpen, function()
+     bufferline_api.set_offset(36)
+ end)
 
 function SignColumn()
     vim.cmd([[setlocal signcolumn=yes:1]])
 end
-
--- nvim_tree_events.on_nvim_tree_ready(SignColumn)
--- nvim_tree_events.on_tree_open(SignColumn)
---nvim_tree_events.on_tree_resize(SignColumn)
 
 -- Keybinding
 vim.cmd [[
